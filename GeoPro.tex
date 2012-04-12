@@ -141,7 +141,7 @@ En matemáticas, y de manera más concreta en el ámbito de la geometría proyec
 \section{Aplicaciones en la realidad}
 
 Una de las aplicaciones que podemos ver en la realidad de la geometría proyectiva es en el tratamiento de imágenes a través de una cámara, al pasar lo que capta del mundo real en 3D a una imagen en 2D.
-Existen muchos modelos matemáticos que explican la geometría relativa a la proyección de una escena 3D sobre imagen 2D mediante una cámara. Uno de los más utilizados es el modelo ideal Pinhole y su variante con parámetros de distorsión.
+Existen muchos modelos matemáticos que explican la geometría relativa a la proyección de una escena 3D sobre imagen 2D mediante una cámara. Uno de los más utilizados es el modelo ideal Pinhole y su variante con parámetros de distorsión. También veremos a continuación de estos modelos, un poco sobre calibración, muy necesaria para multitud de aplicaciones.
 \begin{enumerate}
 
 \item \textbf{Pinhole}\\
@@ -192,7 +192,7 @@ y en forma matricial:
 \begin{equation}
 \lambda m = PM
 \end{equation}
-donde M y m representan las coordenadas homogéneas de esos mismos puntos. P es una matriz de dimensiones 3 x 4 conocida como matriz de proyección perspectiva de la cámara. El parámetro $ \lambda $ representa un factor de escala necesario para que se cumpla la igualdad, en este caso, igual a Z. Este factor representa una de las principales ventajas en el uso de coordenadas homogéneas en geometría proyectiva.
+donde M y m representan las coordenadas homogéneas de esos mismos puntos. P es una matriz de dimensiones 3 x 4 conocida como matriz de proyección perspectiva de la cámara. El parámetro $ \lambda $ representa un factor de escala necesario para que se cumpla la igualdad, en este caso, igual a Z. Este factor representa una de las principales ventajas en el uso de coordenadas homogéneas en geometría proyectiva. Más información \cite{pinhole}
 
 \item \textbf{Con distorsiones}\\
 En este proceso de transformación del espacio 3D al plano imagen, se toma como referencia el sistema de la cámara. La transformación viene determinada por los parámetros intrínsecos, que representan las propiedades ópticas inherentes a la cámara. Se definen propiedades como:
@@ -216,13 +216,23 @@ En el caso de la visión estéreo, en el que se realiza cierta triangulación pa
 En navegación pasiva se utiliza un conjunto de marcas sobre la imagen, en posiciones conocidas para determinar la posición relativa de la cámara, así como su orientación. Como cabe suponer, si existe un error en el calibrado, la navegación pasiva arrojaría resultados erróneos.\\
 En ciertas aplicaciones tan sólo es necesario determinar la transformación proyectiva inversa. En otras, tan sólo la directa, como es el caso de predicción de un objeto en la imagen. En el caso particular de seguimiento o tracking donde se persigue estimar el posicionamiento continuo de un objeto móvil en la imagen, la transformación inversa permite situar el objeto (intersección plano y recta de proyección), mientras que la transformación directa avanza información sobre la posición futura del mismo.\\
 Vista su importancia vamos a dar una breve definición de lo que es el proceso de calibración:\\
-%\emph{
-El proceso de calibración de una cámara tiene como objetivo determinar los parámetros de transformación entre los puntos 3D de la escena y la transformación proyectiva de dichos puntos sobre el espacio 2D imagen. Dicha transformación se rige por dos tipos de parámetros:%}
+El proceso de calibración de una cámara tiene como objetivo determinar los parámetros de transformación entre los puntos 3D de la escena y la transformación proyectiva de dichos puntos sobre el espacio 2D imagen. Dicha transformación se rige por dos tipos de parámetros:
 \begin {itemize}
 \item Parámetros intrínsecos: Coeficientes de distorsión vistos anteriormente en el punto 2.
 \item Parámetros extrínsecos: Conjunto de parámetros que determina la orientación y posición de la cámara en relación al sistema de coordenadas de referencia absoluto. Se definen como: Rotación, los ángulos $ \alpha ,\beta, \gamma$, y como Traslación, $ T_x, T_y, T_z $.
 \end {itemize}
+Una primera aproximación a la calibración nos llevaría a medir y almacenar los parámetros relativos a la recta de proyección asociados a cada pixel en la imagen, obteniendo como resultado una tabla inmensa. Ahora veremos que no es necesario, con métodos de calibración se puede llegar a obtener, interpolando y reduciendo el tamaño de la matriz, una precisión muy similar a la que se obtendría con la tabla completa.\\
+Los métodos de calibración, seleccionan ciertos pixels de la imagen y calculan los parámetros relativos a la interpolación.Entre los algoritmos de calibrado más populares destaca el método de Tsai.
 
+\underline{Método de Tsai}\\
+Algoritmo propuesto por Roger Y. Tsai en 1987, es en la actualidad uno de los algoritmos de calibrado más popular e implementado. Sus principales características son las versatilidad y precisión. Está constituido por cuatro etapas cuyo resultado final es la transformación del punto 3D al plano imagen.
+\begin{enumerate}
+\item Transformación del sistema de coordenadas de la escena al de la cámara. Primero se produce la transformación de rotación y posteriormente la de translación, en ese orden.
+\item Transformación del sistema de coordenadas de la cámara 3D al mundo de las coordenadas ideales, libres de distorsión en el plano imagen según el modelo pinhole. La distancia focal f es el parámetro a calibrar.
+\item Transformación del sistema de coordenadas de la imagen ideal al sistema de coordenadas distorsionado en el sensor. En este caso, el parámetro a calibrar es K1 ya que K2 se considera despreciable.
+\item Transformación del sistema de coordenadas de la imagen con distorsión (xd , yd ) al sistema de coordenadas en el computador (xf , yf ).\\
+Para más información, ver \cite{tsai}. 
+\end{enumerate}
 \end {enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

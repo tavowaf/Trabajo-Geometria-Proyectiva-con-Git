@@ -1,0 +1,13 @@
+\begin{thebibliography}{1}
+
+\bibitem{pinhole}
+Richard Hartley and Andrew Zisserman.
+\newblock Multiple View Geometry in computer vision.
+\newblock {\em Cambridge University Press}, 2003.
+
+\bibitem{tsai}
+R. Y. Tsai.
+\newblock Versatile camera calibration technique for highaccuracy 3D machine vision metrology using off-the-shelf tv cameras and lenses.
+\newblock {\em IEEE Journal of Robotics and Automation}, 1987.
+
+\end{thebibliography}
