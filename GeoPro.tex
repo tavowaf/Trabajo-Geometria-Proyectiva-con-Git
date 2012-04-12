@@ -140,7 +140,90 @@ En matemáticas, y de manera más concreta en el ámbito de la geometría proyec
 
 \section{Aplicaciones en la realidad}
 
- 
+Una de las aplicaciones que podemos ver en la realidad de la geometría proyectiva es en el tratamiento de imágenes a través de una cámara, al pasar lo que capta del mundo real en 3D a una imagen en 2D.
+Existen muchos modelos matemáticos que explican la geometría relativa a la proyección de una escena 3D sobre imagen 2D mediante una cámara. Uno de los más utilizados es el modelo ideal Pinhole y su variante con parámetros de distorsión.
+\begin{enumerate}
+
+\item \textbf{Pinhole}\\
+El modelo pinhole de una cámara consiste en un plano imagen R, lugar donde se proyecta la imagen y un punto C o centro óptico, lugar de convergencia del conjunto de rayos de dicha proyección. El parámetro f, o distancia focal, indica la distancia entre el plano imagen y el centro óptico.
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.6\linewidth]{images/pinhole}
+\end{center}
+\caption{Modelo de cámara Pinhole}
+\label{fig:pinhole}
+\end{figure}
+Se puede observar como el punto 3D M se proyecta en el plano imagen formando el punto m (Fig. \ref{fig:pinhole}). Dicho punto se define como la recta que pasa por C y M. Aplicando el teorema de Thales podemos definir la relación entre las coordenadas no homogéneas de M y m:
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.7\linewidth]{images/pinholegeo}
+\end{center}
+\caption{Modelo geométrico equivalente a una cámara Pinhole}
+\label{fig:pinholegeo}
+\end{figure}
+Suponiendo que dichas coordenadas son $ M =(X,Y,Z)^T $ y $ m=(x,y)^T $ obtenemos que, en coordenadas homogéneas:
+\begin{equation}
+Z\\
+\begin{bmatrix}
+x\\
+y\\
+1
+\end{bmatrix}
+=
+\begin{bmatrix}
+fX\\
+fY\\
+Z
+\end{bmatrix}
+=
+\begin{bmatrix}
+f & 0 & 0 & 0\\
+0 & f & 0 & 0\\
+0 & 0 & 1 & 0
+\end{bmatrix}
+\begin{bmatrix}
+X\\
+Y\\
+Z\\
+1
+\end{bmatrix}
+\end{equation}
+y en forma matricial:
+\begin{equation}
+\lambda m = PM
+\end{equation}
+donde M y m representan las coordenadas homogéneas de esos mismos puntos. P es una matriz de dimensiones 3 x 4 conocida como matriz de proyección perspectiva de la cámara. El parámetro $ \lambda $ representa un factor de escala necesario para que se cumpla la igualdad, en este caso, igual a Z. Este factor representa una de las principales ventajas en el uso de coordenadas homogéneas en geometría proyectiva.
+
+\item \textbf{Con distorsiones}\\
+En este proceso de transformación del espacio 3D al plano imagen, se toma como referencia el sistema de la cámara. La transformación viene determinada por los parámetros intrínsecos, que representan las propiedades ópticas inherentes a la cámara. Se definen propiedades como:
+\begin {itemize}
+\item Coeficientes de distorsión : k1 y k2
+\item Distancias focales (pixels no cuadrados en general): fx y fy
+\item Desplazamiento, offset del centro de la imagen : Cx , Cy .
+\end {itemize}
+En principio, la imagen se forma según el modelo pinhole sin distorsión. Pero debido a que en la práctica, ninguna lente es perfecta, hay que tener en cuenta los tipos de distorsión que se pueden producir e intentar mitigarlos. Los dos tipos de distorsión más característicos son: distorsión radial, dada la forma de la lente, y distorsión tangencial producida por el ensamblado de las partes de la cámara. Estos modelos de distorsión conllevan una serie de operaciones en las que no vamos a entrar, pero de nuevo la geometría proyectiva ayuda en gran medida para simplificar cálculos.
+
+En conclusión, la distorsión en la cámara se modela mediante seis coeficientes principalmente. Existen otro tipo de distorsiones, pero debido a que su impacto es reducido, no se suelen modelar.
+
+
+\item \textbf{Calibración}\\
+El proceso de calibración de una cámara consiste en determinar todos aquellos parámetros que intervienen en el proceso de formación de la imagen. En general, se definen dos tipos de parámetros: geométricos (disposición de los pixels en la imagen) y radiométricos, relativos al brillo del objeto proyectado. Tradicionalmente sólo se consideran los parámetros geométricos.
+
+El proceso de calibración es fundamental para numerosas aplicaciones ya que posibilita determinar la correspondencia proyectiva entre un punto 3D en la escena y un punto 2D en el plano imagen. Por ejemplo:
+
+Si el sistema de visión integrado no está correctamente calibrado, no dispondrá de información precisa sobre la posición relativa del objeto y por lo tanto será imposible manipularlo. Por otro lado, si la distorsión no se rectifica, los parámetros o características asociadas a dicho objeto, tales como la altura, área o perímetro serán corrompidas produciéndose errores de identificación y reconocimiento.\\
+En el caso de la visión estéreo, en el que se realiza cierta triangulación para determinar la profundidad y así poder reconstruir la imagen 3D, la información acerca de las rectas de proyección de los pixels asociados en el par de imágenes ha de ser precisa. En este sentido, una cámara mal calibrada introduciría múltiples errores en el proceso de reconstrucción de la imagen.\\
+En navegación pasiva se utiliza un conjunto de marcas sobre la imagen, en posiciones conocidas para determinar la posición relativa de la cámara, así como su orientación. Como cabe suponer, si existe un error en el calibrado, la navegación pasiva arrojaría resultados erróneos.\\
+En ciertas aplicaciones tan sólo es necesario determinar la transformación proyectiva inversa. En otras, tan sólo la directa, como es el caso de predicción de un objeto en la imagen. En el caso particular de seguimiento o tracking donde se persigue estimar el posicionamiento continuo de un objeto móvil en la imagen, la transformación inversa permite situar el objeto (intersección plano y recta de proyección), mientras que la transformación directa avanza información sobre la posición futura del mismo.\\
+Vista su importancia vamos a dar una breve definición de lo que es el proceso de calibración:\\
+%\emph{
+El proceso de calibración de una cámara tiene como objetivo determinar los parámetros de transformación entre los puntos 3D de la escena y la transformación proyectiva de dichos puntos sobre el espacio 2D imagen. Dicha transformación se rige por dos tipos de parámetros:%}
+\begin {itemize}
+\item Parámetros intrínsecos: Coeficientes de distorsión vistos anteriormente en el punto 2.
+\item Parámetros extrínsecos: Conjunto de parámetros que determina la orientación y posición de la cámara en relación al sistema de coordenadas de referencia absoluto. Se definen como: Rotación, los ángulos $ \alpha ,\beta, \gamma$, y como Traslación, $ T_x, T_y, T_z $.
+\end {itemize}
+
+\end {enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
