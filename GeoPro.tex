@@ -9,12 +9,11 @@
 
 \begin{document}
 
-\title{Aplicaciones de Geometría Proyectiva}
+\title{\textbf{Aplicaciones de Geometría Proyectiva}}
 \author{Gustavo Quesada Menchón}
 \date{}
 \maketitle
 \newpage
-
 \tableofcontents
 \newpage
 
@@ -23,7 +22,7 @@
 Este documento va ha tratar sobre geometría proyectiva y sus aplicaciones, de cómo con sus operaciones básicas nos facilita la tarea en aplicaciones como el tratamiento de imágenes, reconocimiento facial, visión estereoscópica, etc. Para abordar el tema, se va dividir en varias partes. Una pequeña introducción con un poco de historia, definiciones y conceptos básicos sobre geometría proyectiva. Una segunda parte donde se explican un poco las principales operaciones/transformaciones que nos pueden ser útiles. Una tercera parte donde se profundiza algo más en técnicas aplicadas en el tratamiento de imágenes 3D que se ha utilizado en algunos proyectos, y una parte final, con un pequeño resumen y conclusiones sobre el tema.
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section {Definición y conceptos básicos}
 
 Para comenzar explicando qué es la geometría proyectiva, veamos un poco de historia:
@@ -51,7 +50,7 @@ Vamos a tratar en este apartado las transformaciones relacionadas con el tratami
 \item \textbf{Transformaciones proyectivas 3D}\\
 En las transformaciones geométricas de un sistema cartesiano 3D, un punto en el espacio se define por las coordenadas (X, Y, Z) y un pixel en la imagen por el par de coordenadas (x, y).
 A continuación se presentan las transformaciones geométricas 3D fundamentales para el tratamiento de imágenes en tres dimensiones, la rotación y traslación. 
-En la figura (Fig. \ref{fig:fig1})se presenta un sistema de coordenadas 3D (X, Y, Z) que ha sufrido una transformación de translación y rotación. El sistema nuevo generado como resultado de dicha transformación es el definido por (X’, Y ’, Z’). La ecuación que relaciona ambos sistemas de coordenadas es la siguiente: 
+En la figura (Fig. \ref{fig:figura1})se presenta un sistema de coordenadas 3D (X, Y, Z) que ha sufrido una transformación de translación y rotación. El sistema nuevo generado como resultado de dicha transformación es el definido por (X’, Y ’, Z’). La ecuación que relaciona ambos sistemas de coordenadas es la siguiente: 
 
 \begin{equation}
 \begin{pmatrix}
@@ -123,7 +122,7 @@ Z
 donde t es un vector de dimensiones 3 x 1.\\
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.5\linewidth]{images/figura1}
+\includegraphics[width=0.6\linewidth]{images/figura1}
 \end{center}
 \caption{Coodenadas 3D, traslación y rotación}
 \label{fig:figura1}
@@ -241,7 +240,7 @@ Para más información, ver \cite{tsai}.
 
 Para finalizar, vamos a hacer un pequeño resumen. La geometría proyectiva apareció por el año 1639 de la mano de Desargues (sin mucho éxito), motivado principalmente por los métodos aplicados por los pintores del renacimiento a la hora de querer plasmar la realidad en sus liendos en dos dimensiones. Sólo en el siglo XIX se acabó por enraizar, gracias a hallar un modelo analítico. En cambio en la actualidad, su utilidad es mucho mayor. Gracias a propiedades como el representar las coordenadas como coordenadas homogéneas, nos facilita la tarea de operar con las distintas transformaciones geométricas necesarias para aplicaciones varias.\\
 Aunque la utilización de geometría proyectiva abarca muchos campos: robótica, reconocimiento facial, tratamiendo de imágenes 3D, etc. En este trabajo nos hemos centrado en dar una idea general, así como transformaciones más útiles. En la parte de aplicaciones hemos visto modelos matemáticos que explican la geometría relativa a la proyección de una escena 3D sobre imagen 2D mediante una cámara, y un poco sobre calibración de cámaras. Los modelos nos sirven para comprender el funcionamiento de la cámara y tratar algunos aspectos de distorsión, en la calibración ya se aplica el método necesario teniendo en cuenta todos los parámetros que pueden distorsionar la imágen. El método explicado es el método de Tsai, muy extendido actualmente.\\
-Viendo para todo lo que es necesaria la calibración (sistemas de visión stereo, identificación y reconocimiento, navegación pasiva, etc) nos podemos hacer una idea de la importancia de tener la geometría proyectiva como herramienta, siendo éste, sólo uno de sus campos de acción.\\
+Viendo para todo lo que es necesaria la calibración (sistemas de visión stereo, identificación y reconocimiento, navegación pasiva, etc) nos podemos hacer una idea de la importancia de tener la geometría proyectiva como herramienta, siendo éste, sólo uno de sus campos de acción.\\ 
 
 \bibliographystyle{plain}
 \bibliography{refs}
